@@ -1,0 +1,20 @@
+services:
+  sagemath:
+    image: sagemath/sagemath:10.4
+    container_name: sagemath-numtheory
+    ports:
+      - "127.0.0.1:8809:8888"      # host:container
+    volumes:
+      - ./work:/home/sage/work     # ← carpeta relativa al compose
+      # opcional: persistir ajustes de Jupyter
+      - ./jupyter:/home/sage/.jupyter
+    entrypoint: ["sage"]
+    command:
+      - -n
+      - jupyterlab
+      - --ip=0.0.0.0
+      - --port=8888
+      - --notebook-dir=/home/sage/work
+      - --no-browser
+      - --ServerApp.token=
+      - --IdentityProvider.token=
